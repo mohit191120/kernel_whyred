@@ -39,15 +39,14 @@ if [ -f $(pwd)/out/arch/arm64/boot/Image.gz-dtb ]; then
 		curl -s -X POST https://api.telegram.org/bot${BOT_TOKEN}/sendMessage -d text="<i><b>Start Creating Zip File...</b></i>" -d chat_id=${CHAT_ID} -d parse_mode=HTML
 		git clone https://github.com/TheSanty/AnyKernel3.git
 		cp $(pwd)/kernel_xiaomi_sdm660/out/arch/arm64/boot/Image.gz-dtb $(pwd)/AnyKernel3
-		mkdir releases
 		cd AnyKernel3
 		zip -r9 Rename-Whyred-V5.zip *
 		cd ../
-		mv $(pwd)/AnyKernel3/Rename-Whyred-V5.zip $(pwd)/releases
+		mv $(pwd)/AnyKernel3/Rename-Whyred-V5.zip $(pwd)
 		curl -s -X POST https://api.telegram.org/bot${BOT_TOKEN}/sendMessage -d text="<i><b>Start Uploading on Github...</b></i>" -d chat_id=${CHAT_ID} -d parse_mode=HTML
 		git clone https://github.com/mohit191120/kernel_whyred.git
-		OTA_PATH=$(find $(pwd)/releases/Rename*)
-		OTA_NAME=${OTA_PATH/$(pwd)\///}
+		OTA_PATH=$(find $(pwd)/Rename*)
+		OTA_NAME=${OTA_PATH/$(pwd)\//}
 		OTA_SIZE=$(du -h "$OTA_PATH" | head -n1 | awk '{print $1}')
 		OTA_SHA256=$(sha256sum "$OTA_PATH" | awk '{print $1}')
 		GH_RELEASE=TheSanty/releases && TAG=$(date -u +%Y%m%d_%H%M%S)
