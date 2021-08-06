@@ -4,11 +4,11 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 #
-export GITHUB_TOKEN=${{ secrets.GH_TOKEN }}
+export GITHUB_TOKEN=${GH_TOKEN}
 if [ -f $(pwd)/github*.sh ]; then
-                curl -s -X POST https://api.telegram.org/bot${{ secrets.BOT_TOKEN }}/sendMessage -d text="<i><b>Build Complete...</b></i>" -d chat_id=${{ secrets.CHAT_ID }} -d parse_mode=HTML
+                curl -s -X POST https://api.telegram.org/bot${BOT_TOKEN}/sendMessage -d text="<i><b>Build Complete...</b></i>" -d chat_id=${CHAT_ID} -d parse_mode=HTML
         else
-                curl -s -X POST https://api.telegram.org/bot${{ secrets.BOT_TOKEN }}/sendMessage -d text="<i><b>Build Failed With Error...</b></i>" -d chat_id=${{ secrets.CHAT_ID }} -d parse_mode=HTML
+                curl -s -X POST https://api.telegram.org/bot${BOT_TOKEN}/sendMessage -d text="<i><b>Build Failed With Error...</b></i>" -d chat_id=${CHAT_ID} -d parse_mode=HTML
 fi
 OTA_PATH=$(find $(pwd)/github*)
 OTA_NAME=${OTA_PATH/$(pwd)\//}
@@ -20,10 +20,10 @@ LINK=$(bash github-release.sh "$GH_RELEASE" "$TAG" "main" "Date: $(date)" "$OTA_
 echo "Download links:
 GitHub: $LINK
 Sha256sum: $OTA_SHA256"
-curl -s -X POST https://api.telegram.org/bot${{ secrets.BOT_TOKEN }}/sendMessage \
+curl -s -X POST https://api.telegram.org/bot${BOT_TOKEN}/sendMessage \
         -d text="Filename: [${OTA_NAME}](https://github.com/$GH_RELEASE/releases/download/$TAG/$OTA_NAME)
         Size: \`$OTA_SIZE\`
         Sha256sum: \`$OTA_SHA256\`
         Download: [Github]($LINK)" \
-        -d chat_id=${{ secrets.CHAT_ID }} \
+        -d chat_id=${CHAT_ID} \
         -d "parse_mode=Markdown"
