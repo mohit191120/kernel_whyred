@@ -45,7 +45,7 @@ if [ -f $(pwd)/out/arch/arm64/boot/Image.gz-dtb ]; then
 		cd ../
 		mv $(pwd)/AnyKernel3/Rename-Whyred-V5.zip $(pwd)/releases
 		curl -s -X POST https://api.telegram.org/bot${BOT_TOKEN}/sendMessage -d text="<i><b>Start Uploading on Github...</b></i>" -d chat_id=${CHAT_ID} -d parse_mode=HTML
-		https://github.com/mohit191120/kernel_whyred.git
+		git clone https://github.com/mohit191120/kernel_whyred.git
 		OTA_PATH=$(find $(pwd)/releases/Rename*)
 		OTA_NAME=${OTA_PATH/$(pwd)/releases\//}
 		OTA_SIZE=$(du -h "$OTA_PATH" | head -n1 | awk '{print $1}')
@@ -58,7 +58,7 @@ if [ -f $(pwd)/out/arch/arm64/boot/Image.gz-dtb ]; then
 		GitHub: $LINK
 		Sha256sum: $OTA_SHA256"
 		curl -s -X POST https://api.telegram.org/bot${BOT_TOKEN}/sendMessage \
-			-d text="Build completed successfully in $((BUILD_DIFF / 3600)) hour and $((BUILD_DIFF / 60)) minute(s) and $((BUILD_DIFF)) second(s)
+			-d text="Build completed successfully in $((BUILD_DIFF / 3600)) hour and $((BUILD_DIFF / 60)) minute(s)
 			Filename: [${OTA_NAME}](https://github.com/$GH_RELEASE/releases/download/$TAG/$OTA_NAME)
 			Size: \`$OTA_SIZE\`
 			Sha256sum: \`$OTA_SHA256\`
@@ -69,8 +69,8 @@ if [ -f $(pwd)/out/arch/arm64/boot/Image.gz-dtb ]; then
                 curl -s -X POST https://api.telegram.org/bot${BOT_TOKEN}/sendMessage -d text="<i><b>Build Failed With Error...</b></i>" -d chat_id=${CHAT_ID} -d parse_mode=HTML
 fi
 END=$(date +"%s")
-DIFF=$((BUILD_END - BUILD_START))
+DIFF=$((END - START))
 curl -s -X POST https://api.telegram.org/bot${BOT_TOKEN}/sendMessage \
-	-d text="Overall Process Completed in $((DIFF / 3600)) hour and $((DIFF / 60)) minute(s) and $((DIFF)) second(s)" \
+	-d text="Overall Process Completed in $((DIFF / 3600)) hour and $((DIFF / 60)) minute(s)" \
 	-d chat_id=${CHAT_ID} \
 	-d "parse_mode=Markdown"
