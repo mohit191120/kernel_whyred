@@ -52,9 +52,9 @@ if [ -f $(pwd)/out/arch/arm64/boot/Image.gz-dtb ]; then
 		OTA_SHA256=$(sha256sum "$OTA_PATH" | awk '{print $1}')
 		GH_RELEASE=TheSanty/releases && TAG=$(date -u +%Y%m%d_%H%M%S)
 		echo Uploading "$OTA_NAME"...
+		cd kernel_whyred
 		LINK=$(bash github-release.sh "$GH_RELEASE" "$TAG" "main" "Date: $(date)" "$OTA_PATH" | tail -n1 | awk '{print $3}')
 		echo "Download links:
-		cd kernel_whyred
 		GitHub: $LINK
 		Sha256sum: $OTA_SHA256"
 		curl -s -X POST https://api.telegram.org/bot${BOT_TOKEN}/sendMessage \
