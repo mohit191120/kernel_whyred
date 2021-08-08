@@ -28,4 +28,4 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Start Building
-        run: bash build.sh
+        run: bash build_whyred.sh
