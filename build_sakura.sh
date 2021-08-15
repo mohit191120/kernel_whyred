@@ -40,9 +40,9 @@ if [ -f $(pwd)/out/arch/arm64/boot/Image.gz-dtb ]; then
 		git clone https://github.com/TheSanty/AnyKernel3.git
 		cp $(pwd)/kernel_xiaomi_msm8953/out/arch/arm64/boot/Image.gz-dtb $(pwd)/AnyKernel3
 		cd AnyKernel3
-		zip -r9 Rename-Sakura-V5.zip *
+		zip -r9 Rename-Sakura-V6.zip *
 		cd ../
-		mv $(pwd)/AnyKernel3/Rename-Sakura-V5.zip $(pwd)
+		mv $(pwd)/AnyKernel3/Rename-Sakura-V6.zip $(pwd)
 		curl -s -X POST https://api.telegram.org/bot${BOT_TOKEN}/sendMessage -d text="<i><b>Start Uploading on Github...</b></i>" -d chat_id=${CHAT_ID} -d parse_mode=HTML
 		git clone https://github.com/mohit191120/kernel_whyred.git
 		OTA_PATH=$(find $(pwd)/Rename*)
