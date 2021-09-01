@@ -9,6 +9,7 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+  workflow_dispatch:
 env:
   CHAT_ID: "${{ secrets.CHAT_ID }}"
   BOT_TOKEN: "${{ secrets.BOT_TOKEN }}"
