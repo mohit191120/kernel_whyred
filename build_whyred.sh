@@ -16,8 +16,8 @@ git clone https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/
 curl -s -X POST https://api.telegram.org/bot${BOT_TOKEN}/sendMessage -d text="<i><b>Cloning Clang...</b></i>" -d chat_id=${CHAT_ID} -d parse_mode=HTML
 mkdir clang
 cd clang 
-wget https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/master/clang-r433403.tar.gz
-tar xvf clang-r433403.tar.gz
+wget https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/master/clang-r433403b.tar.gz
+tar xvf clang-r433403b.tar.gz
 cd ../
 curl -s -X POST https://api.telegram.org/bot${BOT_TOKEN}/sendMessage -d text="<i><b>Start Building...</b></i>" -d chat_id=${CHAT_ID} -d parse_mode=HTML
 BUILD_START=$(date +"%s")
@@ -40,9 +40,9 @@ if [ -f $(pwd)/out/arch/arm64/boot/Image.gz-dtb ]; then
 		git clone https://github.com/TheSanty/AnyKernel3.git
 		cp $(pwd)/kernel_xiaomi_sdm660/out/arch/arm64/boot/Image.gz-dtb $(pwd)/AnyKernel3
 		cd AnyKernel3
-		zip -r9 Rename-Whyred-V7.zip *
+		zip -r9 Rename-Whyred-V8.zip *
 		cd ../
-		mv $(pwd)/AnyKernel3/Rename-Whyred-V7.zip $(pwd)
+		mv $(pwd)/AnyKernel3/Rename-Whyred-V8.zip $(pwd)
 		curl -s -X POST https://api.telegram.org/bot${BOT_TOKEN}/sendMessage -d text="<i><b>Start Uploading on Github...</b></i>" -d chat_id=${CHAT_ID} -d parse_mode=HTML
 		git clone https://github.com/mohit191120/kernel_whyred.git
 		OTA_PATH=$(find $(pwd)/Rename*)
