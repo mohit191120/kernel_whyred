@@ -16,8 +16,8 @@ git clone https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/
 curl -s -X POST https://api.telegram.org/bot${BOT_TOKEN}/sendMessage -d text="<i><b>Cloning Clang...</b></i>" -d chat_id=${CHAT_ID} -d parse_mode=HTML
 mkdir clang
 cd clang 
-wget https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/master/clang-r433403b.tar.gz
-tar xvf clang-r433403b.tar.gz
+wget https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/master/clang-r437112.tar.gz
+tar xvf clang-r437112.tar.gz
 cd ../
 curl -s -X POST https://api.telegram.org/bot${BOT_TOKEN}/sendMessage -d text="<i><b>Start Building...</b></i>" -d chat_id=${CHAT_ID} -d parse_mode=HTML
 BUILD_START=$(date +"%s")
