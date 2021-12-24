@@ -9,28 +9,20 @@ export GITHUB_TOKEN=${GH_TOKEN}
 cd ~
 curl -s -X POST https://api.telegram.org/bot${BOT_TOKEN}/sendMessage -d text="<i><b>Build Triggerd...</b></i>" -d chat_id=${CHAT_ID} -d parse_mode=HTML
 curl -s -X POST https://api.telegram.org/bot${BOT_TOKEN}/sendMessage -d text="<i><b>Cloning Kernel Sources...</b></i>" -d chat_id=${CHAT_ID} -d parse_mode=HTML
-git clone https://github.com/TheSanty/kernel_xiaomi_msm8953.git
-curl -s -X POST https://api.telegram.org/bot${BOT_TOKEN}/sendMessage -d text="<i><b>Cloning Gcc...</b></i>" -d chat_id=${CHAT_ID} -d parse_mode=HTML
-git clone https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9
-git clone https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9
+git clone https://github.com/TheSanty/kernel_xiaomi_msm8953.git --depth=1
 curl -s -X POST https://api.telegram.org/bot${BOT_TOKEN}/sendMessage -d text="<i><b>Cloning Clang...</b></i>" -d chat_id=${CHAT_ID} -d parse_mode=HTML
-mkdir clang
-cd clang 
-wget https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/master/clang-r437112.tar.gz
-tar xvf clang-r437112.tar.gz
-cd ../
+git clone https://github.com/kdrag0n/proton-clang.git clang --depth=1
 curl -s -X POST https://api.telegram.org/bot${BOT_TOKEN}/sendMessage -d text="<i><b>Start Building...</b></i>" -d chat_id=${CHAT_ID} -d parse_mode=HTML
 BUILD_START=$(date +"%s")
 cd kernel_xiaomi_msm8953/
 export ARCH=arm64 && export SUBARCH=arm64
 make O=out ARCH=arm64 daisy_defconfig
-PATH="$HOME/clang/bin:$HOME/aarch64-linux-android-4.9/bin:$HOME/arm-linux-androideabi-4.9/bin:${PATH}" \
+PATH="$HOME/clang/bin:${PATH}" \
 make -j$(nproc --all) O=out \
                       ARCH=arm64 \
                       CC=clang \
-                      CLANG_TRIPLE=aarch64-linux-gnu- \
-                      CROSS_COMPILE=aarch64-linux-android- \
-                      CROSS_COMPILE_ARM32=arm-linux-androideabi-
+                      CROSS_COMPILE=aarch64-linux-gnu- \
+                      CROSS_COMPILE_ARM32=arm-linux-gnueabi-
 BUILD_END=$(date +"%s")
 BUILD_DIFF=$((BUILD_END - BUILD_START))
 if [ -f $(pwd)/out/arch/arm64/boot/Image.gz-dtb ]; then
