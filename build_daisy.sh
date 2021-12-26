@@ -9,7 +9,7 @@ export GITHUB_TOKEN=${GH_TOKEN}
 cd ~
 curl -s -X POST https://api.telegram.org/bot${BOT_TOKEN}/sendMessage -d text="<i><b>Build Triggerd...</b></i>" -d chat_id=${CHAT_ID} -d parse_mode=HTML
 curl -s -X POST https://api.telegram.org/bot${BOT_TOKEN}/sendMessage -d text="<i><b>Cloning Kernel Sources...</b></i>" -d chat_id=${CHAT_ID} -d parse_mode=HTML
-git clone https://github.com/TheSanty/kernel_xiaomi_msm8953.git --depth=1
+git clone https://github.com/TheSanty/kernel.git -b twelve kernel_xiaomi_msm8953 --depth=1
 curl -s -X POST https://api.telegram.org/bot${BOT_TOKEN}/sendMessage -d text="<i><b>Cloning Clang...</b></i>" -d chat_id=${CHAT_ID} -d parse_mode=HTML
 git clone https://github.com/kdrag0n/proton-clang.git clang --depth=1
 curl -s -X POST https://api.telegram.org/bot${BOT_TOKEN}/sendMessage -d text="<i><b>Start Building...</b></i>" -d chat_id=${CHAT_ID} -d parse_mode=HTML
@@ -32,9 +32,9 @@ if [ -f $(pwd)/out/arch/arm64/boot/Image.gz-dtb ]; then
 		git clone https://github.com/TheSanty/AnyKernel3.git
 		cp $(pwd)/kernel_xiaomi_msm8953/out/arch/arm64/boot/Image.gz-dtb $(pwd)/AnyKernel3
 		cd AnyKernel3
-		zip -r9 Rename-Daisy-V8.zip *
+		zip -r9 Rename-Daisy-V9-Test.zip *
 		cd ../
-		mv $(pwd)/AnyKernel3/Rename-Daisy-V8.zip $(pwd)
+		mv $(pwd)/AnyKernel3/Rename-Daisy-V9-Test.zip $(pwd)
 		curl -s -X POST https://api.telegram.org/bot${BOT_TOKEN}/sendMessage -d text="<i><b>Start Uploading on Github...</b></i>" -d chat_id=${CHAT_ID} -d parse_mode=HTML
 		git clone https://github.com/mohit191120/kernel_whyred.git
 		OTA_PATH=$(find $(pwd)/Rename*)
